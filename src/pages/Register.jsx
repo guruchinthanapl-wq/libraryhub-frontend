@@ -6,6 +6,7 @@ function Register() {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [accessCode, setAccessCode] = useState('');
   const [role, setRole] = useState('librarian');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
@@ -16,13 +17,13 @@ function Register() {
     setError('');
     setSuccess('');
 
-    if (!username || !email || !password) {
+    if (!username || !email || !password || !accessCode) {
       setError('All fields are required.');
       return;
     }
 
     try {
-      await register({ username, email, password, role });
+      await register({ username, email, password, role, accessCode });
       setSuccess('Account created! Redirecting to login...');
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
@@ -55,6 +56,13 @@ function Register() {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+        <input
+          type="password"
+          placeholder="Registration access code"
+          value={accessCode}
+          onChange={(e) => setAccessCode(e.target.value)}
           required
         />
         <select value={role} onChange={(e) => setRole(e.target.value)}>
